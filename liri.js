@@ -1,8 +1,9 @@
 require("dotenv").config();
-var spotify = new Spotify(keys.spotify);
+// var spotify = new Spotify(keys.spotify);
 // project variables 
 var keys = require("./keys.js");
 var axios = require("axios");
+var spotify = require("spotify");
 var fs = require("fs");
 var liriReturn = process.argv[2];
 var search = process.argv[3];
@@ -44,15 +45,24 @@ var concertThis = function() {
 }
 
 var spotifyThisSong = function() {
-exports.spotify = {
-  id: process.env.SPOTIFY_ID,
-  secret: process.env.SPOTIFY_SECRET
-};
+exports.spotify = new spotify({
+   id: process.env.d6418f094a9f42aeaa7794bc6c614b3c, 
+   secret: process.env.cf5d02337f2f41f887f205d405ac3524
+},
+spotify.request("https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx").then(function(data){
+  
+  console.log("The Name of the Concert: " + response.data);
+  console.log("The Venue/City of the Concert: " + response.data[0].venue.city);
+  console.log("The Date & Time of the Concert: " + response.data[0].datetime);
 
-    console.log("The Name of the Concert: " + response.Data);
-    // console.log("The Venue/City of the Concert: " + response.data[0].venue.city);
-    // console.log("The Date & Time of the Concert: " + response.data[0].datetime);
-    }
+}));
+var doWhatItSays = function(){
+  var random = require("./random.txt");
+
+}
+.catch(function(err){
+  console.err("Error occurred: " + err);
+});
 
 // switches for various commands 
 switch(liriReturn) {
@@ -70,4 +80,4 @@ switch(liriReturn) {
     break; 
     
 }
-
+}
