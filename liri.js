@@ -38,8 +38,8 @@ var movieThis = function (){
     }
     console.log(error.config);
   });
-  
 }
+
 var concertThis = function() {
     axios.get("https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp").then(function(response){
     console.log("The Name of the Concert: " + response.data[0].venue.name);
@@ -53,21 +53,28 @@ var spotifyThisSong = function() {
     type: "track",
     query: search,
   }, function(err, data){
-    var songs = data.tracks.items;
-    
-      console.log(songs[0].album.artists[0].name);
-      console.log(songs[0].album.name);
-      console.log(songs[0].uri);
-      console.log(songs[0].name);
-
+      var songs = data.tracks.items;
+      console.log("Artist Name: " + songs[0].album.artists[0].name);
+      console.log("Album: " + songs[0].album.name);
+      console.log("Song Name: " + songs[0].name);
+      console.log("Song's preview link: " + songs[0].uri);
     }
   )
-
 };
-var doWhatItSays = function(){
-  var random = require("./random.txt");
 
+var doWhatItSays = function() {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    console.log(data);
+    var dataArr = data.split(",");
+    console.log(dataArr[1]);
+    concertThis(dataArr[1]);
+  
+  });
 }
+
 
 
 // switches for various commands 
@@ -75,12 +82,15 @@ switch(liriReturn) {
     case "movie-this":
     movieThis();
     break;
+
     case "concert-this":
     concertThis();
     break;
+
     case "spotify-this-song":
     spotifyThisSong();
     break;
+
     case "do-what-it-says":
     doWhatItSays();
     break; 
